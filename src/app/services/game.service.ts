@@ -11,14 +11,14 @@ export class GameService {
   constructor() {}
 
   generateSequence() {
-    const newColor = this.colors[Math.floor(Math.random() * this.colors.length)];
-    this.sequence.push(newColor);
-    console.log('Generated Sequence:', this.sequence); // Debug log
+    for (let i = 0; i < 2; i++) {
+      const newColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+      this.sequence.push(newColor);
+    }
     return this.sequence;
   }
 
   getSequence() {
-    console.log('Retrieved Sequence:', this.sequence); // Debug log
     return this.sequence;
   }
 

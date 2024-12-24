@@ -24,3 +24,19 @@
 .color-box.yellow {
   background-color: yellow;
 }
+/* Ajoutez un effet de surbrillance */
+@keyframes highlight {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: yellow;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+.color-box.highlight {
+  animation: highlight 0.5s ease-in-out;
+}
