@@ -19,6 +19,7 @@ export class SequenceDisplayComponent {
   constructor(private gameService: GameService) {}
 
   ngOnInit() {
+    // this.gameService.generateSequence();
     this.sequence = this.gameService.getSequence();
     this.showSequence();
   }
@@ -37,5 +38,16 @@ export class SequenceDisplayComponent {
 
   highlightColor(color: string) {
     console.log('Highlighting:', color);
+
+    const colorBox = document.querySelector(`.${color}`);
+
+    if (colorBox) {
+      colorBox.classList.add('highlight');
+
+      setTimeout(() => {
+        colorBox.classList.remove('highlight');
+      }, 1000);
+    }
   }
+
 }
