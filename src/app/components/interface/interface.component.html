@@ -1,0 +1,7 @@
+<div>
+  <button *ngFor="let color of colors" (click)="selectColor(color)" [ngClass]="color">
+    {{ color }}
+  </button>
+  <button (click)="validateSequence()">Valider</button>
+  <button (click)="resetSequence()">Réinitialiser</button>
+</div>
