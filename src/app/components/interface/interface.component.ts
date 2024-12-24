@@ -5,7 +5,7 @@ import {NgClass} from '@angular/common';
 @Component({
   selector: 'app-interface',
   imports: [
-    NgClass
+
   ],
   templateUrl: './interface.component.html',
   standalone: true,
@@ -28,4 +28,6 @@ export class InterfaceComponent {
   resetSequence() {
 
   }
+
+
 }

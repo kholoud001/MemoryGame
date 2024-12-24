@@ -8,8 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './score.component.css'
 })
 export class ScoreComponent {
-  score: string | undefined;
 
-  protected readonly status = status;
-  level: string | undefined;
 }

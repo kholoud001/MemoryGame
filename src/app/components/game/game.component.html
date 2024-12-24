@@ -1,6 +1,8 @@
+
 <div>
-  <h2>Game Area</h2>
-  <div *ngIf="sequence.length > 0">
-    <div *ngFor="let color of sequence" class="color-box" [ngClass]="color"></div>
+  <div>
+    <h2>Welcome to MemoryGame !</h2>
+    <button (click)="startGame()">Start Game</button>
   </div>
+
 </div>
