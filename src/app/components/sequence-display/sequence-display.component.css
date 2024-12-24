@@ -1,0 +1,26 @@
+.sequence-container {
+  display: flex;
+  gap: 10px;
+}
+
+.color-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.color-box.red {
+  background-color: red;
+}
+
+.color-box.blue {
+  background-color: blue;
+}
+
+.color-box.green {
+  background-color: green;
+}
+
+.color-box.yellow {
+  background-color: yellow;
+}

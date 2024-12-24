@@ -1,5 +1,7 @@
 .app-container {
   text-align: center;
+  display: flex;
+  flex-direction: column;
   font-family: Arial, sans-serif;
   margin: 20px auto;
   max-width: 600px;
