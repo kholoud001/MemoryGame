@@ -1,9 +1,9 @@
-<div>
-  <h2>Sequence Display</h2>
-  <div class="sequence-container">
-    <div *ngFor="let color of sequence"
-         class="color-box"
-         [ngClass]="color">
-    </div>
+<h2>Sequence Display</h2>
+
+<div class="sequence-container">
+  <div
+    *ngFor="let color of sequence"
+    class="color-box"
+    [ngStyle]="{ 'background-color': color }">
   </div>
 </div>

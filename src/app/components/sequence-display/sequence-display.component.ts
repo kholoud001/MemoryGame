@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService} from '../../services/game.service';
-import {NgClass, NgForOf} from '@angular/common';
+import {NgClass, NgForOf, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-sequence-display',
@@ -9,7 +9,8 @@ import {NgClass, NgForOf} from '@angular/common';
   styleUrls: ['./sequence-display.component.css'],
   imports: [
     NgClass,
-    NgForOf
+    NgForOf,
+    NgStyle
   ]
 })
 export class SequenceDisplayComponent {
@@ -19,10 +20,17 @@ export class SequenceDisplayComponent {
   constructor(private gameService: GameService) {}
 
   ngOnInit() {
-    // this.gameService.generateSequence();
+    this.gameService.generateSequence();
     this.sequence = this.gameService.getSequence();
     this.showSequence();
+
+    console.log(this.gameService.generateSequence()); // Deux couleurs aléatoires
+    console.log(this.gameService.addColor());         // Ajout d'une nouvelle couleur
+    console.log(this.gameService.getSequence());      // Affichage de la séquence
   }
+
+
+
 
   showSequence() {
     let index = 0;
@@ -37,17 +45,16 @@ export class SequenceDisplayComponent {
   }
 
   highlightColor(color: string) {
-    console.log('Highlighting:', color);
+    const index = this.sequence.indexOf(color);
+    const element = document.querySelectorAll('.color-box')[index];
 
-    const colorBox = document.querySelector(`.${color}`);
-
-    if (colorBox) {
-      colorBox.classList.add('highlight');
-
+    if (element) {
+      element.classList.add('highlight');
       setTimeout(() => {
-        colorBox.classList.remove('highlight');
-      }, 1000);
+        element.classList.remove('highlight');
+      }, 500); // Durée de l'animation (0.5s)
     }
   }
+
 
 }
