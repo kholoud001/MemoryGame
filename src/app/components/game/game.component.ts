@@ -16,7 +16,7 @@ export class GameComponent {
   }
 
   startGame() {
-    this.gameService.generateSequence(); // Generate a new sequence
+    this.gameService.generateSequence();
     this.router.navigate(['/sequence-display']);
   }
 }

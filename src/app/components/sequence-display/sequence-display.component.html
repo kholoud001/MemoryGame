@@ -1,16 +1,25 @@
-<div *ngIf="isSequenceVisible; else noSequence">
+<div *ngIf="isSequenceVisible; else buttonPhase">
+  <!-- First section: Display the sequence to memorize -->
   <h2>Sequence Display</h2>
   <p>Memorize the colors to play the game!</p>
+
   <div class="sequence-container">
-    <div
-      *ngFor="let color of sequence"
-      class="color-box"
-      [ngStyle]="{ 'background-color': color }">
-    </div>
+    <div *ngFor="let color of sequence" class="color-box" [ngStyle]="{ 'background-color': color }"></div>
   </div>
 </div>
 
-<ng-template #noSequence>
-  <h2>The sequence is now hidden.</h2>
-  <p>Time play the game!</p>
+<ng-template #buttonPhase>
+  <!-- Second section: User reproduces the sequence -->
+  <h2>Reproduce the Sequence</h2>
+  <div class="button-container">
+    <button
+      *ngFor="let color of buttonColors"
+      [ngStyle]="{ 'background-color': color }"
+      (click)="addUserColor(color)">
+    </button>
+  </div>
+  <div>
+    <button (click)="validateSequence()">Validate</button>
+    <button (click)="resetSequence()">Reset</button>
+  </div>
 </ng-template>

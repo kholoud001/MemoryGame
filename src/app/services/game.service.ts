@@ -7,12 +7,14 @@ export class GameService {
   private sequence: string[] = [];
   private userSequence: string[] = [];
   private colors: string[] = [];
+  level: number = 1;
+
 
   constructor() {
     this.generateColors();
+    this.generateSequence();
   }
 
-  // Générer des couleurs hexadécimales uniques
   private generateColors() {
     while (this.colors.length < 4) {
       const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -21,7 +23,8 @@ export class GameService {
       }
     }
   }
-  generateSequence() {
+
+  generateSequence1() {
     while (this.sequence.length < 2) {
       const newColor = this.getRandomColor();
       if (!this.sequence.includes(newColor)) {
@@ -31,12 +34,22 @@ export class GameService {
     return this.sequence;
   }
 
-  // Récupérer une couleur aléatoire
+  // // Generate the initial sequence
+  generateSequence() {
+    this.sequence = [];
+    while (this.sequence.length < this.level + 1) {
+      const newColor = this.getRandomColor();
+      if (!this.sequence.includes(newColor)) {
+        this.sequence.push(newColor);
+      }
+    }
+    return this.sequence;
+  }
+
   private getRandomColor(): string {
     return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
 
-  // Ajouter une seule couleur unique à la séquence
   addColor() {
     const newColor = this.getRandomColor();
     if (!this.sequence.includes(newColor)) {
@@ -45,15 +58,9 @@ export class GameService {
     return this.sequence;
   }
 
-
-
   getSequence() {
     return this.sequence;
   }
-
-  // addColor1() {
-  //   return this.generateSequence();
-  // }
 
   resetGame() {
     this.sequence = [];
@@ -65,6 +72,22 @@ export class GameService {
   }
 
   validateUserSequence(): boolean {
+    console.log('User Sequence:', this.userSequence);
+    console.log('Game Sequence:', this.sequence);
     return this.userSequence.join('') === this.sequence.join('');
+  }
+
+
+  generateButtonColors(): string[] {
+    return [...this.sequence].sort(() => Math.random() - 0.5);
+  }
+
+  clearUserSequence() {
+    this.userSequence = [];
+  }
+
+  levelUp() {
+    this.level += 1;  // Increase the level
+    this.generateSequence();  // Generate a new sequence for the next level
   }
 }
