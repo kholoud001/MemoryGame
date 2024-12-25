@@ -1,9 +1,16 @@
-<h2>Sequence Display</h2>
-
-<div class="sequence-container">
-  <div
-    *ngFor="let color of sequence"
-    class="color-box"
-    [ngStyle]="{ 'background-color': color }">
+<div *ngIf="isSequenceVisible; else noSequence">
+  <h2>Sequence Display</h2>
+  <p>Memorize the colors to play the game!</p>
+  <div class="sequence-container">
+    <div
+      *ngFor="let color of sequence"
+      class="color-box"
+      [ngStyle]="{ 'background-color': color }">
+    </div>
   </div>
 </div>
+
+<ng-template #noSequence>
+  <h2>The sequence is now hidden.</h2>
+  <p>Time play the game!</p>
+</ng-template>

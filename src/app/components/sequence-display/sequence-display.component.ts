@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService} from '../../services/game.service';
-import {NgClass, NgForOf, NgStyle} from '@angular/common';
+import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-sequence-display',
@@ -8,29 +8,29 @@ import {NgClass, NgForOf, NgStyle} from '@angular/common';
   templateUrl: './sequence-display.component.html',
   styleUrls: ['./sequence-display.component.css'],
   imports: [
-    NgClass,
     NgForOf,
-    NgStyle
+    NgStyle,
+    NgIf
   ]
 })
 export class SequenceDisplayComponent {
 
   sequence: string[] = [];
+  isSequenceVisible: boolean = true;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit() {
+    // Génère la séquence au début
     this.gameService.generateSequence();
     this.sequence = this.gameService.getSequence();
+
+    // Affiche la séquence pendant 15 secondes
     this.showSequence();
-
-    console.log(this.gameService.generateSequence()); // Deux couleurs aléatoires
-    console.log(this.gameService.addColor());         // Ajout d'une nouvelle couleur
-    console.log(this.gameService.getSequence());      // Affichage de la séquence
+    setTimeout(() => {
+      this.isSequenceVisible = false; // Cache la séquence après 15 secondes
+    }, 15000);
   }
-
-
-
 
   showSequence() {
     let index = 0;
