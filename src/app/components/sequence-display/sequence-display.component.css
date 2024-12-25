@@ -13,6 +13,31 @@
 /* Effet de surbrillance générique */
 .color-box.highlight {
   transform: scale(1.2);
-  border: 2px solid white; /* Ajoute une bordure blanche */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Ajoute un effet lumineux */
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button {
+  width: 70px;
+  height: 70px;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
 }

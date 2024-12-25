@@ -1,38 +1,42 @@
 import { Component } from '@angular/core';
-import { GameService} from '../../services/game.service';
-import {NgClass, NgForOf, NgStyle} from '@angular/common';
+import { GameService } from '../../services/game.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sequence-display',
-  standalone: true,
   templateUrl: './sequence-display.component.html',
   styleUrls: ['./sequence-display.component.css'],
   imports: [
-    NgClass,
-    NgForOf,
-    NgStyle
-  ]
+    CommonModule,
+  ],
+  standalone: true
 })
 export class SequenceDisplayComponent {
-
   sequence: string[] = [];
+  buttonColors: string[] = [];
+  userSequence: string[] = [];
+  isSequenceVisible: boolean = true;
+  private intervalId: any;
 
-  constructor(private gameService: GameService) {}
+  constructor(protected gameService: GameService, private router: Router) {}
 
   ngOnInit() {
-    this.gameService.generateSequence();
-    this.sequence = this.gameService.getSequence();
-    this.showSequence();
-
-    console.log(this.gameService.generateSequence()); // Deux couleurs aléatoires
-    console.log(this.gameService.addColor());         // Ajout d'une nouvelle couleur
-    console.log(this.gameService.getSequence());      // Affichage de la séquence
+    this.loadGame();
   }
 
+  // Load the initial game state (called in ngOnInit)
+  loadGame() {
+    this.sequence = this.gameService.getSequence();  // Get the current sequence
+    this.showSequence();  // Display the sequence to the user
 
+    setTimeout(() => {
+      this.isSequenceVisible = false;  // Hide the sequence
+      this.buttonColors = this.gameService.generateButtonColors();
+    }, 15000);
+  }
 
-
-  showSequence() {
+  showSequence1() {
     let index = 0;
     const interval = setInterval(() => {
       if (index < this.sequence.length) {
@@ -44,6 +48,28 @@ export class SequenceDisplayComponent {
     }, 1000);
   }
 
+  showSequence() {
+    let index = 0;
+
+    // Clear any previous intervals
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
+    this.intervalId = setInterval(() => {
+      if (index < this.sequence.length) {
+        console.log('Highlighting color at index', index, ':', this.sequence[index]);
+        this.highlightColor(this.sequence[index]);
+        index++;
+      } else {
+        console.log('Sequence display complete.');
+        clearInterval(this.intervalId);
+        //this.isSequenceVisible = false;
+      }
+    }, 1000);
+  }
+
+  // Highlight a color in the sequence
   highlightColor(color: string) {
     const index = this.sequence.indexOf(color);
     const element = document.querySelectorAll('.color-box')[index];
@@ -52,9 +78,41 @@ export class SequenceDisplayComponent {
       element.classList.add('highlight');
       setTimeout(() => {
         element.classList.remove('highlight');
-      }, 500); // Durée de l'animation (0.5s)
+      }, 1000);
     }
   }
 
+  addUserColor(color: string) {
+    this.gameService.addToUserSequence(color);
+    this.userSequence.push(color);
+  }
 
+  // Validate the user's sequence
+  validateSequence() {
+    const isValid = this.gameService.validateUserSequence();
+
+    if (isValid) {
+      this.gameService.addColor();
+      this.gameService.levelUp();
+
+      this.userSequence = [];
+      this.gameService.clearUserSequence(); // Clear service-side sequence
+
+      this.sequence = this.gameService.getSequence();
+      this.buttonColors = this.gameService.generateButtonColors();
+
+      this.isSequenceVisible = true;
+      setTimeout(() => {
+        this.isSequenceVisible = false;
+      }, this.sequence.length * 1000 + 1000);
+    } else {
+      this.router.navigate(['/scoring']);
+    }
+  }
+
+  // Reset the user's sequence
+  resetSequence() {
+    this.gameService.clearUserSequence();
+    this.userSequence = [];
+  }
 }
