@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {GameComponent} from './components/game/game.component';
-import {InterfaceComponent} from './components/interface/interface.component';
 import {ScoreComponent} from './components/score/score.component';
 import {RouterOutlet} from '@angular/router';
 

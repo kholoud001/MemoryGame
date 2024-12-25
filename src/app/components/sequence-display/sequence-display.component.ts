@@ -16,7 +16,8 @@ export class SequenceDisplayComponent {
   sequence: string[] = [];
   buttonColors: string[] = [];
   userSequence: string[] = [];
-  isSequenceVisible: boolean = true;  // Controls which phase is visible
+  isSequenceVisible: boolean = true;
+  private intervalId: any;
 
   constructor(protected gameService: GameService, private router: Router) {}
 
@@ -29,15 +30,13 @@ export class SequenceDisplayComponent {
     this.sequence = this.gameService.getSequence();  // Get the current sequence
     this.showSequence();  // Display the sequence to the user
 
-    // Wait for 15 seconds before switching to the button phase
     setTimeout(() => {
       this.isSequenceVisible = false;  // Hide the sequence
-      this.buttonColors = this.gameService.generateButtonColors();  // Get available button colors
+      this.buttonColors = this.gameService.generateButtonColors();
     }, 15000);
   }
 
-  // Show the sequence with a delay for each color
-  showSequence() {
+  showSequence1() {
     let index = 0;
     const interval = setInterval(() => {
       if (index < this.sequence.length) {
@@ -46,7 +45,28 @@ export class SequenceDisplayComponent {
       } else {
         clearInterval(interval);
       }
-    }, 1000);  // Show each color for 1 second
+    }, 1000);
+  }
+
+  showSequence() {
+    let index = 0;
+
+    // Clear any previous intervals
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
+    this.intervalId = setInterval(() => {
+      if (index < this.sequence.length) {
+        console.log('Highlighting color at index', index, ':', this.sequence[index]);
+        this.highlightColor(this.sequence[index]);
+        index++;
+      } else {
+        console.log('Sequence display complete.');
+        clearInterval(this.intervalId);
+        //this.isSequenceVisible = false;
+      }
+    }, 1000);
   }
 
   // Highlight a color in the sequence
@@ -58,11 +78,10 @@ export class SequenceDisplayComponent {
       element.classList.add('highlight');
       setTimeout(() => {
         element.classList.remove('highlight');
-      }, 500);  // Remove highlight after 500ms
+      }, 1000);
     }
   }
 
-  // Add a color to the user's sequence when they click a button
   addUserColor(color: string) {
     this.gameService.addToUserSequence(color);
     this.userSequence.push(color);
@@ -73,27 +92,21 @@ export class SequenceDisplayComponent {
     const isValid = this.gameService.validateUserSequence();
 
     if (isValid) {
-      this.gameService.addColor();  // Add a new color to the sequence
-      this.gameService.levelUp();  // Increase the level
+      this.gameService.addColor();
+      this.gameService.levelUp();
 
-      // Clear the user's sequence for the next round
       this.userSequence = [];
-      this.gameService.clearUserSequence();
+      this.gameService.clearUserSequence(); // Clear service-side sequence
 
-      // Update the sequence for the next round
       this.sequence = this.gameService.getSequence();
-
-      // Update buttonColors to reflect the updated sequence
       this.buttonColors = this.gameService.generateButtonColors();
 
-      // Show the sequence again and hide the button phase after 2 seconds
       this.isSequenceVisible = true;
       setTimeout(() => {
         this.isSequenceVisible = false;
-      }, 2000);
-
+      }, this.sequence.length * 1000 + 1000);
     } else {
-      this.router.navigate(['/scoring']);  // Navigate to the scoring page if the sequence is invalid
+      this.router.navigate(['/scoring']);
     }
   }
 

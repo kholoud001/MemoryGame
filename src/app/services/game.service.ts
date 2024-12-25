@@ -88,6 +88,6 @@ export class GameService {
 
   levelUp() {
     this.level += 1;  // Increase the level
-    this.generateSequence();  // Generate a new sequence for the next level
+    this.generateSequence();
   }
 }
