@@ -42,16 +42,16 @@ export class GameService {
   }
 
   // // Generate the initial sequence
-  generateSequence() {
-    this.sequence = [];
-    while (this.sequence.length < this.level + 1) {
-      const newColor = this.getRandomColor();
-      if (!this.sequence.includes(newColor)) {
-        this.sequence.push(newColor);
-      }
-    }
-    return this.sequence;
-  }
+  // generateSequence() {
+  //   this.sequence = [];
+  //   while (this.sequence.length < this.level + 1) {
+  //     const newColor = this.getRandomColor();
+  //     if (!this.sequence.includes(newColor)) {
+  //       this.sequence.push(newColor);
+  //     }
+  //   }
+  //   return this.sequence;
+  // }
 
   setSequence(sequence: string[]) {
     this.sequence = sequence;
@@ -90,6 +90,7 @@ export class GameService {
     const isValid = this.userSequence.join('') === this.sequence.join('');
     if (isValid) {
       this.calculateScore();
+      this.levelUp();
     }
     return isValid;
   }
@@ -108,6 +109,8 @@ export class GameService {
     this.level++;
     this.getInitialSequence(this.level);
   }
+
+
 
   /**
    * Calculates the score based on elapsed time and accuracy.

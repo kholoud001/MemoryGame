@@ -40,10 +40,10 @@ export class SequenceDisplayComponent {
 
   showSequence(index = 0) {
     if (index < this.sequence.length) {
-      this.activeIndex = index; // Highlight the current color
+      this.activeIndex = index;
       setTimeout(() => {
-        this.activeIndex = null; // Clear the highlight
-        this.showSequence(index + 1); // Move to the next color
+        this.activeIndex = null;
+        this.showSequence(index + 1);
       }, 1000);
     } else {
       console.log('Sequence display complete for level', this.currentLevel);
