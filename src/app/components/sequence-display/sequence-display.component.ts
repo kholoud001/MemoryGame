@@ -7,10 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sequence-display',
   templateUrl: './sequence-display.component.html',
   styleUrls: ['./sequence-display.component.css'],
-  imports: [
-    CommonModule,
-  ],
-  standalone: true
+  imports: [CommonModule],
+  standalone: true,
 })
 export class SequenceDisplayComponent {
   sequence: string[] = [];
@@ -18,101 +16,76 @@ export class SequenceDisplayComponent {
   userSequence: string[] = [];
   isSequenceVisible: boolean = true;
   private intervalId: any;
+  activeIndex: number | null = null; // Tracks the current active color index
+  currentLevel: number = 1; // Tracks the current game level
 
   constructor(protected gameService: GameService, private router: Router) {}
 
   ngOnInit() {
-    this.loadGame();
+    this.startLevel(1); // Initialize the game at level 1
   }
 
-  // Load the initial game state (called in ngOnInit)
-  loadGame() {
-    this.sequence = this.gameService.getSequence();  // Get the current sequence
-    this.showSequence();  // Display the sequence to the user
+  startLevel(level: number) {
+    this.currentLevel = level;
+    this.sequence = this.gameService.getInitialSequence(level);
+    this.isSequenceVisible = true;
+    this.showSequence();
 
     setTimeout(() => {
-      this.isSequenceVisible = false;  // Hide the sequence
-      this.buttonColors = this.gameService.generateButtonColors();
-    }, 15000);
+      this.isSequenceVisible = false;
+      // Shuffle the sequence for button colors
+      this.buttonColors = this.shuffleArray([...this.sequence]);
+    }, 15000); // Adjust timeout if necessary
   }
 
-  showSequence1() {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < this.sequence.length) {
-        this.highlightColor(this.sequence[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
-  }
-
-  showSequence() {
-    let index = 0;
-
-    // Clear any previous intervals
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-
-    this.intervalId = setInterval(() => {
-      if (index < this.sequence.length) {
-        console.log('Highlighting color at index', index, ':', this.sequence[index]);
-        this.highlightColor(this.sequence[index]);
-        index++;
-      } else {
-        console.log('Sequence display complete.');
-        clearInterval(this.intervalId);
-        //this.isSequenceVisible = false;
-      }
-    }, 1000);
-  }
-
-  // Highlight a color in the sequence
-  highlightColor(color: string) {
-    const index = this.sequence.indexOf(color);
-    const element = document.querySelectorAll('.color-box')[index];
-
-    if (element) {
-      element.classList.add('highlight');
+  showSequence(index = 0) {
+    if (index < this.sequence.length) {
+      this.activeIndex = index;
       setTimeout(() => {
-        element.classList.remove('highlight');
+        this.activeIndex = null;
+        this.showSequence(index + 1);
       }, 1000);
+    } else {
+      console.log('Sequence display complete for level', this.currentLevel);
     }
   }
 
   addUserColor(color: string) {
-    this.gameService.addToUserSequence(color);
     this.userSequence.push(color);
+    this.gameService.addToUserSequence(color);
   }
 
-  // Validate the user's sequence
   validateSequence() {
     const isValid = this.gameService.validateUserSequence();
 
+    console.log('User Sequence:', this.userSequence);
+    console.log('Game Sequence:', this.sequence);
     if (isValid) {
-      this.gameService.addColor();
-      this.gameService.levelUp();
+      console.log(`Level ${this.currentLevel} passed!`);
+      this.resetUserSequence();
 
-      this.userSequence = [];
-      this.gameService.clearUserSequence(); // Clear service-side sequence
-
-      this.sequence = this.gameService.getSequence();
-      this.buttonColors = this.gameService.generateButtonColors();
-
-      this.isSequenceVisible = true;
-      setTimeout(() => {
-        this.isSequenceVisible = false;
-      }, this.sequence.length * 1000 + 1000);
+      this.currentLevel++;
+      this.startLevel(this.currentLevel);
     } else {
-      this.router.navigate(['/scoring']);
+      console.log('Game over!');
+      this.router.navigate(['/scoring']); // Navigate to scoring on failure
     }
   }
 
-  // Reset the user's sequence
-  resetSequence() {
-    this.gameService.clearUserSequence();
+  resetUserSequence() {
     this.userSequence = [];
+    this.gameService.clearUserSequence();
+  }
+
+  resetSequence() {
+    this.resetUserSequence();
+  }
+
+  // Utility method to shuffle an array
+  shuffleArray(array: string[]): string[] {
+    return array
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
   }
 }

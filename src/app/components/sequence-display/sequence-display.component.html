@@ -2,9 +2,15 @@
   <!-- First section: Display the sequence to memorize -->
   <h2>Sequence Display</h2>
   <p>Memorize the colors to play the game!</p>
+  <p>Level: {{ currentLevel }}</p> <br>
+
 
   <div class="sequence-container">
-    <div *ngFor="let color of sequence" class="color-box" [ngStyle]="{ 'background-color': color }"></div>
+    <div *ngFor="let color of sequence; let i = index"
+         class="color-box"
+         [ngStyle]="{ 'background-color': color }">
+<!--         [class.active]="i === activeIndex"></div>-->
+  </div>
   </div>
 </div>
 
@@ -12,10 +18,9 @@
   <!-- Second section: User reproduces the sequence -->
   <h2>Reproduce the Sequence</h2>
   <div class="button-container">
-    <button
-      *ngFor="let color of buttonColors"
-      [ngStyle]="{ 'background-color': color }"
-      (click)="addUserColor(color)">
+    <button *ngFor="let color of buttonColors"
+            [ngStyle]="{ 'background-color': color }"
+            (click)="addUserColor(color)">
     </button>
   </div>
   <div>
