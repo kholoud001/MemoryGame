@@ -11,17 +11,17 @@ import {GameService} from '../../services/game.service';
 })
 export class ScoreComponent {
   score: number = 0;
+  level: number = 0;
 
-  constructor(private gameService:GameService,private router:Router) {
-  }
+  constructor(private gameService: GameService, private router: Router) {}
 
   ngOnInit() {
-    this.score = Math.floor(Math.random() * 100);
+    this.score = this.gameService.getScore();
+    this.level = this.gameService.getLevel();
   }
 
   goHome() {
     this.gameService.resetGame();
     this.router.navigate(['']);
-
   }
 }
