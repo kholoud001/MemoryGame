@@ -1,61 +1,128 @@
-.sequence-container {
+/* General page layout */
+
+/*html, body {*/
+/*  height: 100%; !* Ensure full height for body and html *!*/
+/*  width: 100%;  !* Ensure full width *!*/
+/*  overflow: hidden; !* Prevent scrollbars *!*/
+/*  font-family: 'Arial', sans-serif; !* Clean font for readability *!*/
+/*}*/
+
+/* Central container for all content */
+
+.sequence-header {
+  background-color: rgb(118, 113, 113); /* Dark background for readability */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Glowing effect */
+  max-width: 600px;
+  width: 100%;
+  justify-self: center;
+  margin-top: 100px;
+
+}
+.sequence-container{
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  /*flex-direction: column;*/
+  margin: 50px 50px;
+
 }
 
+
+
+h2 {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+p {
+  color: #fdd900;
+  text-shadow: 2px 2px 6px rgb(58, 253, 0);
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+
+.level{
+  color: #00fde4;
+  text-shadow: 2px 2px 6px rgb(214, 0, 239);
+}
+
+
+.sequence-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+
+/* Color boxes for sequence */
 .color-box {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
   transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .color-box.highlight {
   transform: scale(1.2);
-  border: 2px solid white;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.8);
 }
 
+/* Button container */
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
+/* Button styles */
 button {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border: none;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 1.5rem;
   color: white;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.2s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
   transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 button:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
 
-.action{
+/* Action buttons */
+.action {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
+  margin-top: 30px;
 }
 
 .action-button {
-  width: 80px;
+  width: 120px;
   height: 50px;
   background-color: #4CAF50;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .action-button:hover {
@@ -65,4 +132,36 @@ button:active {
 .action-button:active {
   transform: scale(0.95);
   background-color: #3e8e41;
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Sequence display animation */
+.color-box {
+  animation: blink 1s ease-in-out infinite;
+}
+
+
+/* Header & content wrapper */
+h2, p {
+  text-align: center;
+}
+
+
+/* Action buttons spacing */
+.action-button {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.action-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }

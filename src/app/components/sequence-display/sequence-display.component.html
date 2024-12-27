@@ -1,10 +1,10 @@
+<div class="sequence-header">
 <div *ngIf="isSequenceVisible; else buttonPhase">
   <!-- First section: Display the sequence to memorize -->
   <h2>Sequence Display</h2>
   <p>Memorize the colors to play the game!</p>
-  <p>Level: {{ currentLevel }}</p> <br>
+  <p class="level">Level: {{ currentLevel }}</p> <br>
   <p>Time Remaining: {{ timer }}s</p>
-
 
 
   <div class="sequence-container">
@@ -12,10 +12,11 @@
          class="color-box"
          [ngStyle]="{ 'background-color': color }"
          [@blink]="i === activeIndex ? activeState : 'inactive'">
-<!-- [class.active]="i === activeIndex"-->
-  </div>
+    </div>
   </div>
 </div>
+
+
 
 <ng-template #buttonPhase>
   <!-- Second section: User reproduces the sequence -->
@@ -27,11 +28,9 @@
             [@buttonClick]="buttonState">
     </button>
   </div>
-  <div>
-    <br>
-    <div class="action">
+  <div class="action">
     <button class="action-button" (click)="validateSequence()">Validate</button>
     <button class="action-button" (click)="resetSequence()">Reset</button>
-    </div>
   </div>
 </ng-template>
+</div>
