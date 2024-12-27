@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+
 
 @Component({
   selector: 'app-sequence-display',
@@ -9,7 +12,42 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sequence-display.component.css'],
   imports: [CommonModule],
   standalone: true,
+  animations: [
+    // Define the 'blink' animation trigger
+    trigger('blink', [
+      state('inactive', style({
+        opacity: 1
+      })),
+      state('active', style({
+        opacity: 0.5
+      })),
+      transition('inactive => active', [
+        animate('0.5s ease-in-out')
+      ]),
+      transition('active => inactive', [
+        animate('0.5s ease-in-out')
+      ])
+    ]),
+    // Define the existing 'buttonClick' trigger
+    trigger('buttonClick', [
+      state('inactive', style({
+        transform: 'scale(1)',
+        opacity: 1
+      })),
+      state('active', style({
+        transform: 'scale(1.2)',
+        opacity: 0.8
+      })),
+      transition('inactive => active', [
+        animate('0.2s ease-in')
+      ]),
+      transition('active => inactive', [
+        animate('0.2s ease-out')
+      ])
+    ])
+  ],
 })
+
 export class SequenceDisplayComponent {
   sequence: string[] = [];
   buttonColors: string[] = [];
@@ -19,6 +57,13 @@ export class SequenceDisplayComponent {
   currentLevel: number = 1;
   timer = 15;
   interval: any;
+  activeState: 'inactive' | 'active' = 'inactive';
+  buttonState: 'inactive' | 'active' = 'inactive';
+
+  onButtonClick() {
+    this.buttonState = this.buttonState === 'inactive' ? 'active' : 'inactive';
+  }
+
 
 
   constructor(protected gameService: GameService, private router: Router) {}
@@ -33,7 +78,7 @@ export class SequenceDisplayComponent {
     this.sequence = this.gameService.getInitialSequence(level);
     this.isSequenceVisible = true;
     this.timer = 15;
-    this.startTimer(); 
+    this.startTimer();
     this.showSequence();
 
 
@@ -44,12 +89,25 @@ export class SequenceDisplayComponent {
     }, 15000);
   }
 
-  showSequence(index = 0) {
+  showSequence1(index = 0) {
     if (index < this.sequence.length) {
       this.activeIndex = index;
       setTimeout(() => {
         this.activeIndex = null;
         this.showSequence(index + 1);
+      }, 1000);
+    } else {
+      console.log('Sequence display complete for level', this.currentLevel);
+    }
+  }
+
+  showSequence(index = 0) {
+    if (index < this.sequence.length) {
+      this.activeIndex = index;
+      this.activeState = 'active';
+      setTimeout(() => {
+        this.activeState = 'inactive';
+        setTimeout(() => this.showSequence(index + 1), 300);
       }, 1000);
     } else {
       console.log('Sequence display complete for level', this.currentLevel);
