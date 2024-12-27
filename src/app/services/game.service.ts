@@ -32,26 +32,24 @@ export class GameService {
    * @param level Current game level.
    * @returns Sequence of colors.
    */
-  getInitialSequence(level: number): string[] {
+  getInitialSequence1(level: number): string[] {
     this.sequence = [];
     while (this.sequence.length < 2 + (level - 1)) {
       const newColor = this.getRandomColor();
       this.sequence.push(newColor);
     }
-    return [...this.sequence]; // Return a copy of the sequence
+    return [...this.sequence];
   }
 
-  // // Generate the initial sequence
-  // generateSequence() {
-  //   this.sequence = [];
-  //   while (this.sequence.length < this.level + 1) {
-  //     const newColor = this.getRandomColor();
-  //     if (!this.sequence.includes(newColor)) {
-  //       this.sequence.push(newColor);
-  //     }
-  //   }
-  //   return this.sequence;
-  // }
+  getInitialSequence(level: number): string[] {
+    if (this.sequence.length < level + 1) {
+      const newColor = this.getRandomColor();
+      this.sequence.push(newColor);
+    }
+    return [...this.sequence];
+  }
+
+
 
   setSequence(sequence: string[]) {
     this.sequence = sequence;

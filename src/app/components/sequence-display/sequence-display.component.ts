@@ -13,7 +13,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   imports: [CommonModule],
   standalone: true,
   animations: [
-    // Define the 'blink' animation trigger
     trigger('blink', [
       state('inactive', style({
         opacity: 1
@@ -28,7 +27,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         animate('0.5s ease-in-out')
       ])
     ]),
-    // Define the existing 'buttonClick' trigger
     trigger('buttonClick', [
       state('inactive', style({
         transform: 'scale(1)',
@@ -81,7 +79,6 @@ export class SequenceDisplayComponent {
     this.startTimer();
     this.showSequence();
 
-
     setTimeout(() => {
       this.isSequenceVisible = false;
       // Shuffle the sequence for button colors
@@ -89,17 +86,7 @@ export class SequenceDisplayComponent {
     }, 15000);
   }
 
-  showSequence1(index = 0) {
-    if (index < this.sequence.length) {
-      this.activeIndex = index;
-      setTimeout(() => {
-        this.activeIndex = null;
-        this.showSequence(index + 1);
-      }, 1000);
-    } else {
-      console.log('Sequence display complete for level', this.currentLevel);
-    }
-  }
+
 
   showSequence(index = 0) {
     if (index < this.sequence.length) {
@@ -142,10 +129,14 @@ export class SequenceDisplayComponent {
   }
 
   resetSequence() {
+
     this.resetUserSequence();
+    //this.startLevel(1);
+    this.gameService.resetGame();
+    this.router.navigate(['']);
   }
 
-  // Utility method to shuffle an array
+
   shuffleArray(array: string[]): string[] {
     return array
       .map(value => ({ value, sort: Math.random() }))
@@ -154,11 +145,9 @@ export class SequenceDisplayComponent {
   }
 
   startTimer() {
-    // Clear any existing interval to avoid multiple timers
     if (this.interval) {
       clearInterval(this.interval);
     }
-
     this.interval = setInterval(() => {
       if (this.timer > 0) {
         this.timer--;
@@ -168,6 +157,7 @@ export class SequenceDisplayComponent {
       }
     }, 1000);
   }
+
   ngOnDestroy() {
     clearInterval(this.interval);
   }
