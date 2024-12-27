@@ -15,27 +15,33 @@ export class SequenceDisplayComponent {
   buttonColors: string[] = [];
   userSequence: string[] = [];
   isSequenceVisible: boolean = true;
-  private intervalId: any;
-  activeIndex: number | null = null; // Tracks the current active color index
-  currentLevel: number = 1; // Tracks the current game level
+  activeIndex: number | null = null;
+  currentLevel: number = 1;
+  timer = 15;
+  interval: any;
+
 
   constructor(protected gameService: GameService, private router: Router) {}
 
   ngOnInit() {
-    this.startLevel(1); // Initialize the game at level 1
+    this.startLevel(1);
+    this.startTimer();
   }
 
   startLevel(level: number) {
     this.currentLevel = level;
     this.sequence = this.gameService.getInitialSequence(level);
     this.isSequenceVisible = true;
+    this.timer = 15;
+    this.startTimer(); 
     this.showSequence();
+
 
     setTimeout(() => {
       this.isSequenceVisible = false;
       // Shuffle the sequence for button colors
       this.buttonColors = this.shuffleArray([...this.sequence]);
-    }, 15000); // Adjust timeout if necessary
+    }, 15000);
   }
 
   showSequence(index = 0) {
@@ -68,7 +74,7 @@ export class SequenceDisplayComponent {
       this.startLevel(this.currentLevel);
     } else {
       console.log('Game over!');
-      this.router.navigate(['/scoring']); // Navigate to scoring on failure
+      this.router.navigate(['/scoring']);
     }
   }
 
@@ -87,5 +93,24 @@ export class SequenceDisplayComponent {
       .map(value => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
+  }
+
+  startTimer() {
+    // Clear any existing interval to avoid multiple timers
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+
+    this.interval = setInterval(() => {
+      if (this.timer > 0) {
+        this.timer--;
+      } else {
+        clearInterval(this.interval); // Stop the timer when it reaches 0
+        this.isSequenceVisible = false; // Transition to the next phase
+      }
+    }, 1000);
+  }
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 }
