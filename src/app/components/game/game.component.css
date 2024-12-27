@@ -1,0 +1,182 @@
+/* General page layout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%; /* Ensure full height for body and html */
+  width: 100%;  /* Ensure full width */
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+/* The container takes up the full height and width */
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of viewport */
+  width: 100%;  /* Full width of the viewport */
+  /*background: linear-gradient(135deg, #ff7f50, #ff6347); !* Fun gradient background *!*/
+  font-family: 'Press Start 2P', cursive; /* Retro pixel font for a game vibe */
+  color: white;
+  text-align: center;
+  padding: 0 20px; /* Some padding for smaller screens */
+  position: relative; /* To position the design elements correctly */
+}
+
+/* Header section styles */
+.game-header {
+  background-color: rgba(0, 0, 0, 0.6); /* Dark background for readability */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Glowing effect */
+  max-width: 600px;
+  width: 100%;
+  animation: popIn 1s ease-out;
+}
+
+/* Title styles */
+h1 {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  font-size: 4rem;
+}
+
+/* Game description */
+.game-description {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Button styling */
+.start-button {
+  background: #ffeb3b; /* Bright yellow color */
+  color: #ff5733; /* Deep orange text */
+  font-size: 1.5rem;
+  padding: 20px 50px;
+  border: 4px solid #ff5733;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Glow effect */
+}
+
+.start-button:hover {
+  background: #ff5733; /* Orange background on hover */
+  color: white;
+  transform: scale(1.1); /* Slight increase in size for interaction */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.start-button:active {
+  transform: scale(0.95); /* Shrink effect when clicked */
+}
+
+/* Animation for header */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Design elements (circles, triangles, squares) */
+.design-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Ensures these elements don't interfere with other content */
+  z-index: -1; /* Put them behind the main content */
+}
+
+.circle {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgb(15, 205, 89);
+  top: 20%;
+  left: 10%;
+  animation: moveCircle 6s ease-in-out infinite;
+}
+
+.triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid rgb(253, 0, 23);
+  top: 50%;
+  right: 20%;
+  animation: moveTriangle 5s ease-in-out infinite;
+}
+
+.square1 {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-color: rgb(30, 26, 106);
+  bottom: 15%;
+  left: 25%;
+  animation: moveSquare 7s ease-in-out infinite;
+}
+
+.square2 {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-color: rgb(253, 178, 0);
+  top: 10%;
+  right: 25%;
+  animation: moveSquare 7s ease-in-out infinite;
+}
+
+/* Animations for the design elements */
+@keyframes moveCircle {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes moveTriangle {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveSquare {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
