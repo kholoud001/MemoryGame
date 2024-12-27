@@ -10,7 +10,6 @@
   transition: transform 0.3s ease-in-out;
 }
 
-/* Effet de surbrillance générique */
 .color-box.highlight {
   transform: scale(1.2);
   border: 2px solid white;
@@ -40,4 +39,30 @@ button:hover {
 
 button:active {
   transform: scale(0.9);
+}
+
+.action{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-button {
+  width: 80px;
+  height: 50px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #45a049;
+}
+
+.action-button:active {
+  transform: scale(0.95);
+  background-color: #3e8e41;
 }

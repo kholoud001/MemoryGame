@@ -13,7 +13,6 @@
          [ngStyle]="{ 'background-color': color }"
          [@blink]="i === activeIndex ? activeState : 'inactive'">
 <!-- [class.active]="i === activeIndex"-->
-
   </div>
   </div>
 </div>
@@ -26,12 +25,13 @@
             [ngStyle]="{ 'background-color': color }"
             (click)="addUserColor(color)"
             [@buttonClick]="buttonState">
-<!--      {{ color }}-->
     </button>
-
   </div>
   <div>
-    <button (click)="validateSequence()">Validate</button>
-    <button (click)="resetSequence()">Reset</button>
+    <br>
+    <div class="action">
+    <button class="action-button" (click)="validateSequence()">Validate</button>
+    <button class="action-button" (click)="resetSequence()">Reset</button>
+    </div>
   </div>
 </ng-template>
