@@ -1,6 +1,16 @@
-<div>
-  <h2>Game Over!</h2>
-  <p>Your score: {{ score }}</p>
-  <p>Your level: {{ level }}</p>
-  <button (click)="goHome()">Go Home</button>
+<div class="game-over-container">
+  <!-- Header Section -->
+  <h2 class="game-over-header">Game Over!</h2>
+  <p class="game-over-score">Your score: <span>{{ score }}</span></p>
+  <p class="game-over-level">Your level: <span>{{ level }}</span></p>
+
+  <!-- Icon Section -->
+  <div class="game-over-icons">
+    <div class="icon-container triangle"></div>
+    <div class="icon-container circle"></div>
+    <div class="icon-container rectangle"></div>
+  </div>
+
+  <!-- Button Section -->
+  <button class="game-over-button" (click)="goHome()">Go Home</button>
 </div>

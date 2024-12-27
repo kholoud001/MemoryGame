@@ -1,4 +1,90 @@
-div {
+/* General container styling */
+.game-over-container {
   text-align: center;
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+.game-over-header {
+  font-size: 3rem;
+  color: #ff4d4d; /* Bright red for emphasis */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
+}
+
+.game-over-score, .game-over-level {
+  font-size: 1.5rem;
+  color: #333; /* Neutral text color */
+}
+
+.game-over-score span, .game-over-level span {
+  font-weight: bold;
+  color: #ff9900; /* Highlight important info */
+}
+
+/* Icons Section */
+.game-over-icons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.icon-container {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.icon-container:hover {
+  transform: scale(1.2);
+}
+
+/* Triangle Icon */
+.triangle {
+  background-color: #ff6666; /* Light red */
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Circle Icon */
+.circle {
+  background-color: #66b3ff; /* Light blue */
+  border-radius: 50%;
+}
+
+/* Rectangle Icon */
+.rectangle {
+  background-color: #66ff66; /* Light green */
+  border-radius: 5px;
+}
+
+/* Button Styling */
+.game-over-button {
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 30px;
+}
+
+.game-over-button:hover {
+  background-color: #45a049;
+}
+
+.game-over-button:active {
+  transform: scale(0.95);
+  background-color: #3e8e41;
 }
