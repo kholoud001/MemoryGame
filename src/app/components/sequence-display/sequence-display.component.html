@@ -11,7 +11,8 @@
     <div *ngFor="let color of sequence; let i = index"
          class="color-box"
          [ngStyle]="{ 'background-color': color }"
- [class.active]="i === activeIndex">
+         [@blink]="i === activeIndex ? activeState : 'inactive'">
+<!-- [class.active]="i === activeIndex"-->
   </div>
   </div>
 </div>
@@ -22,11 +23,15 @@
   <div class="button-container">
     <button *ngFor="let color of buttonColors"
             [ngStyle]="{ 'background-color': color }"
-            (click)="addUserColor(color)">
+            (click)="addUserColor(color)"
+            [@buttonClick]="buttonState">
     </button>
   </div>
   <div>
-    <button (click)="validateSequence()">Validate</button>
-    <button (click)="resetSequence()">Reset</button>
+    <br>
+    <div class="action">
+    <button class="action-button" (click)="validateSequence()">Validate</button>
+    <button class="action-button" (click)="resetSequence()">Reset</button>
+    </div>
   </div>
 </ng-template>
